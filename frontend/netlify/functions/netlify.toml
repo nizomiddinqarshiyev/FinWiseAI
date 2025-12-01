@@ -1,16 +1,18 @@
 [build]
-  base = "frontend"
   command = "npm run build"
-  publish = ".next"
+  publish = "out"
 
 [build.environment]
   NODE_VERSION = "18"
+  NPM_VERSION = "10"
 
+# Redirects (SPA routing uchun)
 [[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
 
+# Headers (Security)
 [[headers]]
   for = "/*"
   [headers.values]
@@ -18,3 +20,45 @@
     X-XSS-Protection = "1; mode=block"
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
+```
+
+**MUHIM:** `publish = "out"` chunki Next.js static export `out/` papkaga chiqaradi.
+
+---
+
+### **QADAM 4: .gitignore Tekshirish**
+
+`frontend/.gitignore`:
+```
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# testing
+coverage/
+
+# next.js
+.next/
+out/
+build/
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+.env
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
